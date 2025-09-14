@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriela Perario - Desenvolvedora Front-End</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variáveis de cores */
+        :root {
+            --primary: #191970;
+            --secondary: #5c37e2;
+            --accent: #ffff00;
+            --text: #f8f8f8;
+            --dark: #000000;
+            --light: #ffffff;
+            --gray: #f0f0f0;
+            --dark-bg: #0a0a1a;
+        }
+
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Navegação */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--text);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        /* Hero Section - Layout atualizado */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--dark-bg), var(--primary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><circle cx="50" cy="50" r="40" stroke="%23ffff00" fill="none" /></svg>');
+            background-size: 100px;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent);
+            box-shadow: 0 0 25px var(--accent);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
+
+        .about-section {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* Projetos */
+        .projects {
+            background-color: var(--dark-bg);
+        }
+
+        .projects-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 1.1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .project-description {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background-color: rgba(92, 55, 226, 0.2);
+            color: var(--accent);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary);
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .project-link:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Habilidades */
+        .skills {
+            background-color: var(--primary);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            padding: 8px 0;
+            color: var(--text);
+        }
+
+        /* Contato */
+        .contact {
+            background-color: var(--dark-bg);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            padding-right: 20px;
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .contact-text {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary);
+            color: var(--light);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary);
+            color: var(--light);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .about-section {
+                padding: 30px;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background-color: rgba(10, 10, 26, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 20px 0;
+                gap: 15px;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .profile-image {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .about-section {
+                padding: 20px;
+            }
+            
+            .project-card {
+                margin-bottom: 20px;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">Gabriela</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projetos</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Layout atualizado -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="profile-section">
+                <img src="https://media.licdn.com/dms/image/v2/D4D03AQGS25edH322cA/profile-displayphoto-shrink_400_400/B4DZbuvGnZIEAo-/0/1747762048687?e=1760572800&v=beta&t=Ov4ekKbtFRE0CcTZoD9o9SyrDUSwXKr4QBd1ctMsDgs" alt="Gabriela Perario" class="profile-image">
+                <h1 class="hero-title">Gabriela Perario</h1>
+                <h2 class="hero-subtitle">Desenvolvedora Front-End</h2>
+            </div>
+            
+            <div class="about-section">
+                <h2 class="section-title">Sobre Mim</h2>
+                <div class="about-text">
+                    <p>Olá, me chamo Gabriela, tenho 20 anos e sou desenvolvedora front-end. Atualmente, estou cursando Análise e Desenvolvimento de Sistemas. Busco minha primeira oportunidade na área de tecnologia para aplicar and expandir minhas habilidades, contribuindo em projetos desafiadores e inovadores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projetos -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Meus Trabalhos Recentes</h2>
+            <p class="projects-intro">Uma seleção de projetos que demonstram minhas habilidades e paixão pelo desenvolvimento.</p>
+            
+            <div class="projects-grid">
+                <!-- Projeto 1 -->
+                <div class="project-card">
+                    <img src="list.jpeg" alt="To-Do List" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">To-Do List</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <p class="project-description">Uma solução digital eficiente para gerenciamento de tarefas, ajudando os usuários a se manterem organizados e produtivos.</p>
+                        <a href="https://gabyperario777.github.io/todolist/" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 2 -->
+                <div class="project-card">
+                    <img src="como-fazer-vitrine-de-loja-.webp" alt="E-commerce" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Website E-commerce</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <p class="project-description">Uma plataforma de e-commerce moderna e responsiva, projetada para uma experiência de compra fluida e agradável.</p>
+                        <a href="https://lojaok.netlify.app/" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 3 -->
+                <div class="project-card">
+                    <img src="Captura de tela de 2025-09-14 13-02-28.png" alt="Restaurante Esha" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Restaurante Esha</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <p class="project-description">Um site fictício voltado para restaurantes a fim de mostrar suas especialidades.</p>
+                        <a href="https://restauranteesha.netlify.app/" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 4 - Portfólio de Fotógrafo -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Portfólio de Fotógrafo" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Portfólio de Fotógrafo</h3>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Design Responsivo</span>
+                        </div>
+                        <p class="project-description">Um belo portfólio para fotógrafos e amantes da fotografia, com galeria elegante e layout responsivo que destaca as imagens.</p>
+                        <a href="https://portfotgrafo.netlify.app/" class="project-link">Ver Projeto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Minha Caixa de Ferramentas</h2>
+            <p class="projects-intro">As tecnologias e ferramentas que eu uso para criar soluções modernas e eficientes.</p>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3 class="skill-title">Front-End</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">HTML</li>
+                        <li class="skill-item">CSS</li>
+                        <li class="skill-item">JavaScript</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3 class="skill-title">Back-End</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Python</li>
+                        <li class="skill-item">SQL</li>
+                        <li class="skill-item">Java</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <div class="skill-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="skill-title">Ferramentas</h3>
+                    <ul class="skill-list">
+                        <li class="skill-item">Git & GitHub</li>
+                        <li class="skill-item">VS Code</li>
+                        <li class="skill-item">Figma</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contato</h2>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3 class="contact-title">Vamos Conversar</h3>
+                    <p class="contact-text">Tem alguma pergunta ou quer trabalhar junto? Me envie uma mensagem.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/Gabyperario777" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/gabriela-perario-38b1ba242/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/dev_gabih777/" class="social-link"><i class="fab fa-instagram"></i></a>
+                       <a href="https://wa.me/5521980994350" class="social-link" target="_blank">
+                       <i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+               <div class="contact-form">
+    <form action="https://formspree.io/f/mvgbnold" method="POST">
+        <div class="form-group">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Seu nome" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="seu@email.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="message" class="form-label">Mensagem</label>
+            <textarea id="message" name="message" class="form-input" placeholder="Sua mensagem..." required></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Enviar Mensagem</button>
+    </form>
+</div>
+</section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2025 Gabriela Perario. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
