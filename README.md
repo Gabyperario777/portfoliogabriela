@@ -1,1 +1,1 @@
-Link do meu portfólio: https://portfliogabriela.netlify.app/
+Link do meu portfólio: 
